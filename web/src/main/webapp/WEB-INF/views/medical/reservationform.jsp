@@ -80,21 +80,25 @@ function bindTimetable(){
 	$.get("timeTableView", function(data, state){
 		  // 성공한 경우
 		  if(state == "success"){
-			  var ul = $(".time10");
-			  ul.empty();
+			  var am = $(".timeam");
+			  var pm = $(".timepm");
+			  am.empty();
+			  pm.empty();
+			  
 			  // 타임 테이블
-			  for(var i=0; i<data.length; i++){
-				  if (i %2==0){
-					  ul.append("<li><span class='un active' value='"+data[i].tcode+"'>00</span></li>");
+			  am.append("<tr><th rowspan='4' class='ti'>오전</th>");
+			  pm.append("<tr><th rowspan='7' class='tip'>오후</th>");
+			  for(var i=0; i<data.length; i+=2){
+				  if (i < 6){
+					  am.append("<tr><th class='hour_am'>"+data[i].ttime.split(':')[0]+"시</th><td><ul class='time10'><li><span class='un active' value='"+(i+1)+"'>"+data[i].ttime.split(':')[1]+"</span></li><li><span class='un active' value='"+(i+2)+"'>"+data[i+1].ttime.split(':')[1]+"</span></li></ul></td></tr>");
 				  }else{
-					  ul.append("<li><span class='un active' value='"+data[i].tcode+"'>30</span></li>");
+					  pm.append("<tr><th class='hour_pm'>"+data[i].ttime.split(':')[0]+"시</th><td><ul class='time10'><li><span class='un active' value='"+(i+1)+"'>"+data[i].ttime.split(':')[1]+"</span></li><li><span class='un active' value='"+(i+2)+"'>"+data[i+1].ttime.split(':')[1]+"</span></li></ul></td></tr>");
 				  }
 			  }
+			  
 		  }
 	});
 }
-
-
 </script>
 
   
@@ -236,29 +240,10 @@ function bindTimetable(){
 									<col width="38">
 									<col width="*">
 								</colgroup>
-								<tbody>
-									<tr>
-										<th rowspan="3" class="ti">오전</th>								
-										<th class="hour am">10시</th>
-										<td>
-											<ul class="time10">
-											</ul>
-										</td>
-									</tr>
-									<tr>
-										<th class="hour am">11시</th>
-										<td>
-											<ul class="time10">
-											</ul>
-										</td>
-									</tr>
-									<tr>
-										<th class="hour am">12시</th>
-										<td>
-											<ul class="time10">
-											</ul>
-										</td>
-									</tr>
+								<!-- 오전 -->
+								<tbody class="timeam">								
+										
+									
 								</tbody>
 							</table>
 							<table summary="시간 선택" class="pm">
@@ -268,52 +253,9 @@ function bindTimetable(){
 									<col width="38">
 									<col width="*">
 								</colgroup>
-								<tbody>
-									<tr>
-										<th rowspan="8" class="ti">오후</th>
-										<th class="hour pm">1시</th>
-											<td>
-											<ul class="time10">		
-											</ul>
-										</td>
-									</tr>
-									<tr>
-										<th class="hour pm">2시</th>
-										<td>
-											<ul class="time10">
-											</ul>
-										</td>
-									</tr>
-									<tr>
-										<th class="hour pm">3시</th>
-											<td>
-											<ul class="time10">
-											</ul>
-										</td>
-									</tr>
-									<tr>
-										<th class="hour pm">4시</th>
-											<td>
-											<ul class="time10">
-											</ul>
-										</td>
-									</tr>
-									<tr>
-										<th class="hour pm">5시</th>
-											<td>
-											<ul class="time10">
-											</ul>
-										</td>
-									</tr>
-									<tr>
-										<th class="hour pm">6시</th>
-											<td>
-											<ul class="time10">
-											</ul>
-										</td>
-									</tr>
-									
-								</tbody>
+								<!-- 오후 -->
+								<tbody class="timepm"></tbody>
+								
 							</table>
 						
 					</dl>
